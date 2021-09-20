@@ -11,16 +11,26 @@ const App = () => {
         const { data } = await commerce.products.list();
         setProducts(data);
     }
-
+// cart is destructured from the response object
     const fetchCart = async () => {
         const cart = await commerce.cart.retrieve();
         setCart(cart)
     }
 
     const handleAddToCart = async (productId, quantity) => {
-        const item = await commerce.cart.add(productId, quantity);
+        const { cart } = await commerce.cart.add(productId, quantity);
 
-        setCart(item.cart);
+        setCart(cart);
+    }
+
+    const handleUpdateCartQty = async (productId, quantity) => {
+        const { cart } = await commerce.cart.update(productId, { quantity });
+
+        setCart(cart)
+    }
+
+    const handleRemoveFromCart = async (productId) => {
+        const { cart } = await commerce.cart.remove(productId);
     }
 
     // empty dependancy array means the useEffect only runs upon loading
