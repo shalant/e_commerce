@@ -31,6 +31,14 @@ const App = () => {
 
     const handleRemoveFromCart = async (productId) => {
         const { cart } = await commerce.cart.remove(productId);
+
+        setCart(cart);
+    }
+
+    const handleEmptyCart = async () => {
+        const { cart } = await commerce.cart.empty();
+
+        setCart(cart);
     }
 
     // empty dependancy array means the useEffect only runs upon loading
@@ -51,7 +59,12 @@ const App = () => {
                         <Products products={products} onAddToCart={handleAddToCart} />
                     </Route>
                     <Route exact path='/cart'>
-                        <Cart cart={cart} />
+                        <Cart 
+                            cart={cart} 
+                            handleUpdateCartQty={handleUpdateCartQty}
+                            handleRemoveFromCart={handleRemoveFromCart}
+                            handleEmptyCart={handleEmptyCart}
+                        />
                     </Route>
                 </Switch>
             </div>
@@ -60,3 +73,5 @@ const App = () => {
 }
 
 export default App;
+
+// Context can get rid of "props drilling, or passing too many props"
