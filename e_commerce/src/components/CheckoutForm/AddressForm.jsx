@@ -17,7 +17,7 @@ const AddressForm = ({ checkoutToken }) => {
 
     const countries = Object.entries(shippingCountries).map(([code, name]) => ({ id: code, label: name }));
     const subdivisions = Object.entries(shippingSubdivisions).map(([code, name]) => ({ id: code, label: name }));
-    // const options = shippingOptions.map(() => )
+    const options = shippingOptions.map((sO) => ({ id: sO.id, label: `${sO.description} - (${sO.price.formatted_with_symbol})` }))
 
     console.log(shippingOptions);
 
@@ -45,7 +45,7 @@ const AddressForm = ({ checkoutToken }) => {
 
     useEffect(() => {
         fetchShippingCountries(checkoutToken.id)
-    }, [checkoutToken.id])
+    }, [])
 
     useEffect(() => {
         if(shippingCountry) fetchSubdivisions(shippingCountry)
@@ -53,7 +53,7 @@ const AddressForm = ({ checkoutToken }) => {
     }, [shippingCountry])
 
     useEffect(() => {
-        if(shippingSubdivisions) fetchShippingOptions(checkoutToken.id, shippingCountry, shippingSubdivision);
+        if(shippingSubdivision) fetchShippingOptions(checkoutToken.id, shippingCountry, shippingSubdivision);
     }, [shippingSubdivision])
 
     return (
